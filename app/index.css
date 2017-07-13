@@ -1,0 +1,19 @@
+body {
+	background: #333;
+    color: #aaa;
+}
+
+.center {
+    text-align: center;
+}
+
+.center ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    *display: inline;
+}
+
+.center li {
+    padding: 5px 5px;
+}
