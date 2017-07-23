@@ -4,6 +4,7 @@ var QueryString = require('query-string');
 var PropTypes = require('prop-types');
 var api = require('../utils/api');
 var PlayerPreview = require('./PlayerPreview');
+var Loading = require('./Loading');
 
 
 function Profile(props) {
@@ -90,7 +91,7 @@ class Results extends React.Component {
     let loading = this.state.loading;
 
     if(loading === true) {
-      return <h2 className="row">Loading</h2>;
+      return <Loading />; // <h2 className="row">Loading</h2>;
     }
 
     if(error) {
