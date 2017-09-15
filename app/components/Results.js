@@ -1,14 +1,13 @@
-var React = require('react');
-var Link = require('react-router-dom').Link;
-var QueryString = require('query-string');
-var PropTypes = require('prop-types');
-var api = require('../utils/api');
-var PlayerPreview = require('./PlayerPreview');
-var Loading = require('./Loading');
+import React from 'react';
+import { Link } from 'react-router-dom';
+import QueryString from 'query-string';
+import PropTypes from 'prop-types';
+import { battle } from '../utils/api';
+import PlayerPreview from './PlayerPreview';
+import Loading from './Loading';
 
 
-function Profile(props) {
-  let info = props.info;
+function Profile({info}) {
 
   return (
     <PlayerPreview avatar={info.avatar_url} username={info.login}>
@@ -29,12 +28,12 @@ Profile.propTypes = {
 }
 
 
-function Player(props) {
+function Player({ label, score, profile }) {
   return (
     <div>
-      <h1 className="header">{props.label}</h1>
-      <h3 style={{textAlign: 'center'}}>Score: {props.score}</h3>
-      <Profile info={props.profile}/>
+      <h1 className="header">{label}</h1>
+      <h3 style={{textAlign: 'center'}}>Score: {score}</h3>
+      <Profile info={profile}/>
     </div>
   );
 }
@@ -58,37 +57,30 @@ class Results extends React.Component {
 
 
   componentDidMount() {
-    let players = QueryString.parse(this.props.location.search);
+    const { playerOneName, playerTwoName } = QueryString.parse(thisprops.location.search);
 
-    api.battle([
-      players.playerOneName,
-      players.playerTwoName
+    battle([
+      playerOneName,
+      playerTwoName
     ]).then(results => {
       if(results === null) {
-        return this.setState(function() {
-          return {
-            error: 'Looks like there was an error',
-            loading: false
-          };
-        });
+        return this.setState(() => ({
+          error: 'Looks like there was an error',
+          loading: false
+        }));
       }
 
-      this.setState(function() {
-        return {
-          error: null,
-          winner: results[0],
-          loser: results[1],
-          loading: false
-        };
-      });
-    });
-   }
+      this.setState(() => ({
+        error: null,
+        winner: results[0],
+        loser: results[1],
+        loading: false
+      }))
+   });
+ }
 
   render() {
-    let error = this.state.error;
-    let winner = this.state.winner;
-    let loser = this.state.loser;
-    let loading = this.state.loading;
+    const { error, winner, loser, loading } = this.state;
 
     if(loading === true) {
       return <Loading />; // <h2 className="row">Loading</h2>;
@@ -121,4 +113,4 @@ class Results extends React.Component {
 }
 
 
-module.exports = Results;
+export default Results;

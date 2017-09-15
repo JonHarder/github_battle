@@ -1,7 +1,7 @@
-var React = require('react');
-var NavLink = require('react-router-dom').NavLink;
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const Nav = (props) => {
+export default function Nav(props) {
   return (
     <ul className='nav'>
       <li>
@@ -16,5 +16,3 @@ const Nav = (props) => {
     </ul>
   );
 };
-
-module.exports = Nav;
